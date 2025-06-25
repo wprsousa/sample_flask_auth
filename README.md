@@ -1,4 +1,4 @@
-# Sample Flask Auth
+<file name=0 path=README.md># Sample Flask Auth
 
 Um projeto simples de autenticação com Flask, utilizando Flask-Login e SQLite. Ideal para aprender como funciona o fluxo de login, logout, registro e rotas protegidas em uma aplicação web com Flask.
 
@@ -10,19 +10,18 @@ Um projeto simples de autenticação com Flask, utilizando Flask-Login e SQLite.
 - Flask  
 - Flask-Login  
 - SQLAlchemy  
-- SQLite  
-- Bootstrap 5 (via CDN)
+- SQLite
+- bcrypt
 
 ---
 
 ## 📦 Funcionalidades
 
-- Cadastro de usuário  
+- Cadastro de usuário com senha criptografada  
 - Login e logout  
 - Sessão de usuário com Flask-Login  
 - Rotas protegidas  
-- Dashboard privado  
-- Estrutura de templates com Jinja2
+
 
 ---
 
@@ -66,6 +65,7 @@ set FLASK_ENV=development
 flask shell
 >>> from app import db
 >>> db.create_all()
+>>> db.session.commit()
 >>> exit()
 ```
 
@@ -80,43 +80,43 @@ flask run
 Acesse no navegador:  
 [http://localhost:5000](http://localhost:5000)
 
+A API também pode ser testada via ferramentas como Postman ou cURL. Por exemplo, para criar um usuário:
+
+```bash
+curl -X POST http://localhost:5000/user \
+-H "Content-Type: application/json" \
+-d '{"username": "admin", "password": "123"}'
+```
+
 ---
 
 ## 🗂 Estrutura de Pastas
 
 ```
 sample_flask_auth/
-├── app/
-│   ├── static/
-│   ├── templates/
-│   ├── config.py
-│   ├── forms.py
-│   ├── models.py
-│   └── views.py
-├── run.py
-└── requirements.txt
+├── app.py
+├── models/
+│   └── user.py
+├── database.py
+├── requirements.txt
+└── venv/
 ```
 
 ---
 
 ## 🧪 Rotas
 
-- `/` – Página inicial  
-- `/login` – Tela de login  
-- `/register` – Tela de cadastro  
-- `/dashboard` – Página protegida  
-- `/logout` – Logout
+- `POST /login` – Faz login do usuário  
+- `GET /logout` – Faz logout do usuário autenticado  
+- `POST /user` – Cria um novo usuário  
+- `GET /user/<int:id_user>` – Retorna dados de um usuário específico (requer autenticação)  
+- `PUT /user/<int:id_user>` – Atualiza a senha de um usuário específico (requer autenticação – apenas o próprio usuário ou perfis não‑"user")  
+- `DELETE /user/<int:id_user>` – Deleta um usuário específico (requer autenticação – somente admin, não pode deletar a si mesmo)  
 
----
-
-## 📄 Licença
-
-Este projeto está licenciado sob a licença MIT.  
-Consulte o arquivo `LICENSE.md` para mais detalhes.
 
 ---
 
 ## 🙋 Contato
 
-Desenvolvido por [@wprsousa](https://github.com/wprsousa)  
-Contribuições e feedbacks são bem-vindos!
+Desenvolvido por [@wprsousa](https://github.com/wprsousa)
+</file>
